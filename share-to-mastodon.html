@@ -74,12 +74,6 @@
       background-color: rgb(214 61 46);
     }
 
-    button#shareButton:disabled,
-    button#removeButton:disabled {
-      background-color: #d1d5db;
-      cursor: default;
-    }
-
     .container {
       display: flex;
       flex-direction: column;
@@ -145,7 +139,7 @@
 
       </div>
       <div style="display: flex; justify-content: space-between; column-gap: 0.5rem;">
-        <button id="shareButton" type="submit" disabled>
+        <button id="shareButton" type="submit">
           <svg aria-hidden="true" style="width: 1.5rem; height: 1.5rem; vertical-align: middle;" width="24" height="24"
             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -154,7 +148,7 @@
           </svg>
           <div style="display: inline-block; vertical-align: bottom;">共有</div>
         </button>
-        <button id="removeButton" type="button" onclick="removeInstance()" disabled title="インスタンスを削除">
+        <button id="removeButton" type="button" onclick="removeInstance()" title="インスタンスを削除">
           <svg aria-hidden="true" style="width: 1.5rem; height: 1.5rem; vertical-align: middle;" width="24" height="24"
             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -171,28 +165,18 @@
     </form>
   </div>
   <script>
+    let instances = [];
+
     window.onload = function () {
       loadInstances();
-      toggleButtons();
     };
 
-    function toggleButtons() {
-      var select = document.getElementById("instances");
-      var input = document.getElementById("newInstance");
-      var shareButton = document.getElementById("shareButton");
-      var removeButton = document.getElementById("removeButton");
-      var selected = !!select.options[select.selectedIndex];
-      var inputted = !!input.value && input.value !== "";
-
-      shareButton.disabled = !(selected || inputted);
-      removeButton.disabled = !selected;
-    }
-
     function loadInstances() {
-      var instances = JSON.parse(localStorage.getItem("instances")) || [];
+      instances = JSON.parse(localStorage.getItem("instances")) || [];
       var lastUsedInstance = localStorage.getItem("lastUsedInstance");
       var select = document.getElementById("instances");
 
+      // default instances
       if (instances.length === 0) {
         instances.push("https://mstdn.jp/");
         instances.push("https://pawoo.net/");
@@ -228,7 +212,6 @@
     function share() {
       var select = document.getElementById("instances");
       var input = document.getElementById("newInstance");
-      var instances = JSON.parse(localStorage.getItem("instances")) || [];
       var instance;
 
       if (input.value) {
