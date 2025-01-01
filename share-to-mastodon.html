@@ -121,11 +121,12 @@
     <form onsubmit="event.preventDefault(); share();">
       <div>
         <label for="instances">インスタンス</label>
-        <select id="instances" onchange="toggleButtons()">
+        <select id="instances" aria-label="Mastodonインスタンスを選択">
         </select>
       </div>
       <div style="position: relative;">
-        <input type="url" id="newInstance" placeholder="https://mastodon.social" oninput="toggleButtons()"
+        <input type="url" id="newInstance" placeholder="https://mastodon.social"
+          aria-label="新しいMastodonインスタンスのURLを入力"
           style="padding-left: 2.5rem;">
 
         <svg aria-hidden="true" style="position: absolute; top:0; left:0; padding: 0.5rem;" width="28" height="28"
@@ -195,7 +196,6 @@
         }
         select.appendChild(option);
       });
-      toggleButtons();
     }
 
     function removeInstance() {
